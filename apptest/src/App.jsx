@@ -33,7 +33,7 @@ const validationSchema = Yup.object({
 });
 
 const genderOptions = [
-  { value: "", label: "" }, // Empty option
+  { value: "", label: <div style={{ color: "#fff" }}>.</div> }, // Empty option
   { value: "F", label: "Female" },
   { value: "M", label: "Male" },
   { value: "U", label: "Unknown" },
@@ -113,13 +113,13 @@ const App = () => {
                 gap: "20px", // เพิ่ม gap ระหว่างแต่ละช่อง input
                 width: "100%",
                 alignItems: "center",
-                background: "#f4f3f3",
+                background: "#F0F4FF",
               }}
             >
               <div>
                 <FormControl style={{ width: "60%", marginLeft:"220px"}} margin="normal">
                   <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
-                    First name<span style={{ color: "red" }}>*</span>
+                    First name<span style={{ color: "#FC6B7E" }}>*</span>
                   </InputLabel>
 
                   <TextField
@@ -141,7 +141,7 @@ const App = () => {
               <div>
                 <FormControl style={{ width: "60%" }} margin="normal">
                   <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
-                    Last name<span style={{ color: "red" }}>*</span>
+                    Last name<span style={{ color: "#FC6B7E" }}>*</span>
                   </InputLabel>
 
                   <TextField
@@ -163,7 +163,7 @@ const App = () => {
               <div>
                 <FormControl style={{ width: "60%", marginLeft:"220px" }} margin="normal">
                   <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
-                    Gender<span style={{ color: "red" }}>*</span>
+                    Gender<span style={{ color: "#FC6B7E" }}>*</span>
                   </InputLabel>
 
                   <TextField
@@ -192,7 +192,7 @@ const App = () => {
               <div>
                 <FormControl style={{  width: "60%" }} margin="normal">
                   <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
-                    Score<span style={{ color: "red" }}>*</span>
+                    Score<span style={{ color: "#FC6B7E" }}>*</span>
                   </InputLabel>
 
                   <TextField
@@ -229,8 +229,9 @@ const App = () => {
                     marginRight: "-105%",
                   }}
                 >
+                  <div style={{marginTop:"-30px", display:"flex", justifyContent:"center",marginRight:"1%"}}>
                   <Button
-                    style={{ margin: "0 10px", width: "100px" }}
+                    style={{ margin: "0 10px", width: "100px", boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2)",height:"50px ", borderRadius:"10px"}}
                     type="submit"
                     color="primary"
                     variant="contained"
@@ -239,7 +240,7 @@ const App = () => {
                     {editIndex >= 0 ? "Edit" : "Add"}
                   </Button>
                   <Button
-                    style={{ margin: "0 20px", width: "100px" }}
+                    style={{ margin: "0 20px", width: "100px" ,color:"#000",background:"#fff", boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2) ",borderRadius:"10px"}}
                     type="button"
                     onClick={() => {
                       resetForm();
@@ -248,13 +249,14 @@ const App = () => {
                   >
                     Cancel
                   </Button>
+                  </div>
                 </div>
               </div>
             </Form>
 
             <TableContainer component={Paper}>
               <Table>
-                <TableHead sx={{ backgroundColor: "#8da8d8" }}>
+                <TableHead sx={{ backgroundColor: "#8DA8D8" }}>
                   <TableRow>
                     <TableCell
                       sx={{
@@ -315,7 +317,7 @@ const App = () => {
                       key={index}
                       sx={{
                         backgroundColor:
-                          index % 2 === 0 ? "#ffffff" : "#efefef",
+                          index % 2 === 0 ? "#ffffff" : "#F0F4FF",
                         "&:hover": { backgroundColor: "#ececec" },
                       }}
                     >
