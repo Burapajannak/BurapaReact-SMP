@@ -13,6 +13,8 @@ import {
   Paper,
   Tooltip,
   IconButton,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -31,7 +33,7 @@ const validationSchema = Yup.object({
 });
 
 const genderOptions = [
-  { value: "", label: <div style={{color:"#fff"}}>.</div> }, // Empty option
+  { value: "", label: "" }, // Empty option
   { value: "F", label: "Female" },
   { value: "M", label: "Male" },
   { value: "U", label: "Unknown" },
@@ -94,83 +96,120 @@ const App = () => {
         onSubmit={handleAdd}
         enableReinitialize
       >
-        {({ isSubmitting, resetForm, setValues, values, handleChange, touched, errors }) => (
+        {({
+          isSubmitting,
+          resetForm,
+          setValues,
+          values,
+          handleChange,
+          touched,
+          errors,
+        }) => (
           <>
             <Form
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
+                gap: "20px", // เพิ่ม gap ระหว่างแต่ละช่อง input
                 width: "100%",
                 alignItems: "center",
                 background: "#f4f3f3",
               }}
             >
-              <TextField style= { {marginLeft:"220px"}}
-                name="firstname"
-                label="First name*"
-                fullWidth
-                margin="normal"
-                error={touched.firstname && Boolean(errors.firstname)}
-                helperText={touched.firstname ? errors.firstname : ""}
-                value={values.firstname}
-                onChange={handleChange}
-                InputProps={{ 
-                  style: { background: "#fff", width: "60%",borderRadius:"10px"},
-                  sx: { width: "100%" }
-                }}
-              />
+              <div>
+                <FormControl style={{ width: "60%", marginLeft:"220px"}} margin="normal">
+                  <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
+                    First name<span style={{ color: "red" }}>*</span>
+                  </InputLabel>
 
-              <TextField style= { {marginLeft:"30px"}}
-                name="lastname"
-                label="Last name*"
-                fullWidth
-                margin="normal"
-                error={touched.lastname && Boolean(errors.lastname)}
-                helperText={touched.lastname ? errors.lastname : ""}
-                value={values.lastname}
-                onChange={handleChange}
-                InputProps={{ 
-                  style: { background: "#fff", width: "60%" ,borderRadius:"10px"},
-                  sx: { width: "100%" }
-                }}
-              />
+                  <TextField
+                    id="firstname"
+                    name="firstname"
+                    fullWidth
+                    margin="normal"
+                    error={touched.firstname && Boolean(errors.firstname)}
+                    helperText={touched.firstname ? errors.firstname : ""}
+                    value={values.firstname}
+                    onChange={handleChange}
+                    InputProps={{
+                      style: { background: "#fff", borderRadius: "10px" },
+                    }}
+                  />
+                </FormControl>
+              </div>
 
-              <TextField style={ {marginLeft:"220px"}}
-                name="gender"
-                select
-                label="Gender*"
-                fullWidth
-                margin="normal"
-                error={touched.gender && Boolean(errors.gender)}
-                helperText={touched.gender ? errors.gender : ""}
-                value={values.gender}
-                onChange={handleChange}
-                InputProps={{ 
-                  style: { background: "#fff",  width: "60%" ,borderRadius:"10px" },
-                  sx: { width: "100%" }
-                }}
-              >
-                {genderOptions.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <div>
+                <FormControl style={{ width: "60%" }} margin="normal">
+                  <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
+                    Last name<span style={{ color: "red" }}>*</span>
+                  </InputLabel>
 
-              <TextField style= { {marginLeft:"30px"}}
-                name="score"
-                label="Score*"
-                fullWidth
-                margin="normal"
-                error={touched.score && Boolean(errors.score)}
-                helperText={touched.score ? errors.score : ""}
-                value={values.score}
-                onChange={handleChange}
-                InputProps={{ 
-                  style: { background: "#fff",  width: "60%" ,borderRadius:"10px" },
-                  sx: { width: "100%" }
-                }}
-              />
+                  <TextField
+                    id="lastname"
+                    name="lastname"
+                    fullWidth
+                    margin="normal"
+                    error={touched.lastname && Boolean(errors.lastname)}
+                    helperText={touched.lastname ? errors.lastname : ""}
+                    value={values.lastname}
+                    onChange={handleChange}
+                    InputProps={{
+                      style: { background: "#fff", borderRadius: "10px" },
+                    }}
+                  />
+                </FormControl>
+              </div>
+
+              <div>
+                <FormControl style={{ width: "60%", marginLeft:"220px" }} margin="normal">
+                  <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
+                    Gender<span style={{ color: "red" }}>*</span>
+                  </InputLabel>
+
+                  <TextField
+                    id="gender"
+                    name="gender"
+                    select
+                    fullWidth
+                    margin="normal"
+                    error={touched.gender && Boolean(errors.gender)}
+                    helperText={touched.gender ? errors.gender : ""}
+                    value={values.gender}
+                    onChange={handleChange}
+                    InputProps={{
+                      style: { background: "#fff", borderRadius: "10px" },
+                    }}
+                  >
+                    {genderOptions.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </FormControl>
+              </div>
+
+              <div>
+                <FormControl style={{  width: "60%" }} margin="normal">
+                  <InputLabel style={{ marginTop: "-20px" }} htmlFor="score">
+                    Score<span style={{ color: "red" }}>*</span>
+                  </InputLabel>
+
+                  <TextField
+                    id="score"
+                    name="score"
+                    fullWidth
+                    margin="normal"
+                    error={touched.score && Boolean(errors.score)}
+                    helperText={touched.score ? errors.score : ""}
+                    value={values.score}
+                    onChange={handleChange}
+                    InputProps={{
+                      style: { background: "#fff", borderRadius: "10px" },
+                    }}
+                  />
+                </FormControl>
+              </div>
 
               <div
                 style={{
@@ -191,37 +230,20 @@ const App = () => {
                   }}
                 >
                   <Button
-                    style={{ margin: "0 10px", width:"100px",boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.1)", }}
-                   
+                    style={{ margin: "0 10px", width: "100px" }}
                     type="submit"
                     color="primary"
                     variant="contained"
                     disabled={isSubmitting}
-                    sx={{
-                  
-                      color: "#ffffff", // เปลี่ยนสีตัวอักษร
-                    }}
                   >
                     {editIndex >= 0 ? "Edit" : "Add"}
-                  </Button >
-                  <Button 
-                    style={{ margin: "0 20px", width:"100px",boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.1)", }}
+                  </Button>
+                  <Button
+                    style={{ margin: "0 20px", width: "100px" }}
                     type="button"
                     onClick={() => {
                       resetForm();
                       setEditIndex(-1);
-                    }}
-                    sx={{
-                      
-                      width:"100px",
-                      backgroundColor: "#fff", // เปลี่ยนสีพื้นหลัง
-                      color: "#000", // เปลี่ยนสีตัวอักษร
-                       border: "0.05px solid #d0d0d0",
-                       boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.1)",
-                      "&:hover": {
-                        backgroundColor: "#efefef", // เปลี่ยนสีเมื่อเมาส์โฮเวอร์
-                          
-                      },
                     }}
                   >
                     Cancel
@@ -229,6 +251,7 @@ const App = () => {
                 </div>
               </div>
             </Form>
+
             <TableContainer component={Paper}>
               <Table>
                 <TableHead sx={{ backgroundColor: "#8da8d8" }}>
@@ -292,7 +315,7 @@ const App = () => {
                       key={index}
                       sx={{
                         backgroundColor:
-                          index % 2 === 0 ? "#ffffff" : "#e9e9e9",
+                          index % 2 === 0 ? "#ffffff" : "#efefef",
                         "&:hover": { backgroundColor: "#ececec" },
                       }}
                     >
