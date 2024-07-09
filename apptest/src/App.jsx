@@ -31,7 +31,7 @@ const validationSchema = Yup.object({
 });
 
 const genderOptions = [
-  { value: "  ", label: "" }, // Empty option
+  { value: "", label: <div style={{color:"#fff"}}>.</div> }, // Empty option
   { value: "F", label: "Female" },
   { value: "M", label: "Male" },
   { value: "U", label: "Unknown" },
@@ -75,6 +75,7 @@ const App = () => {
   return (
     <Container
       style={{
+        padding: "auto",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -93,63 +94,61 @@ const App = () => {
         onSubmit={handleAdd}
         enableReinitialize
       >
-        {({ isSubmitting, resetForm, setValues, values, handleChange }) => (
+        {({ isSubmitting, resetForm, setValues, values, handleChange, touched, errors }) => (
           <>
             <Form
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
-                width: "50%",
+                width: "100%",
                 alignItems: "center",
+                background: "#f4f3f3",
               }}
             >
-              <TextField
+              <TextField style= { {marginLeft:"220px"}}
                 name="firstname"
-                label="First name"
+                label="First name*"
                 fullWidth
                 margin="normal"
-                error={Boolean(<ErrorMessage name="firstname" />)}
-                helperText={<ErrorMessage name="firstname" />}
-                sx={{
-                  width: "100%",
-                  bgcolor: "#f0f0f0",
-                  borderBottom: "1px solid #f1f0f0",
-                }}
+                error={touched.firstname && Boolean(errors.firstname)}
+                helperText={touched.firstname ? errors.firstname : ""}
                 value={values.firstname}
                 onChange={handleChange}
+                InputProps={{ 
+                  style: { background: "#fff", width: "60%",borderRadius:"10px"},
+                  sx: { width: "100%" }
+                }}
               />
-              <TextField
+
+              <TextField style= { {marginLeft:"30px"}}
                 name="lastname"
-                label="Last name"
+                label="Last name*"
                 fullWidth
                 margin="normal"
-                error={Boolean(<ErrorMessage name="lastname" />)}
-                helperText={<ErrorMessage name="lastname" />}
-                sx={{
-                  marginLeft: "20px",
-                  width: "100%",
-                  bgcolor: "#f0f0f0",
-                  borderBottom: "1px solid #f1f0f0",
-                }}
+                error={touched.lastname && Boolean(errors.lastname)}
+                helperText={touched.lastname ? errors.lastname : ""}
                 value={values.lastname}
                 onChange={handleChange}
+                InputProps={{ 
+                  style: { background: "#fff", width: "60%" ,borderRadius:"10px"},
+                  sx: { width: "100%" }
+                }}
               />
-              <TextField
+
+              <TextField style={ {marginLeft:"220px"}}
                 name="gender"
                 select
-                label="Gender"
+                label="Gender*"
                 fullWidth
                 margin="normal"
-                error={Boolean(<ErrorMessage name="gender" />)}
-                helperText={<ErrorMessage name="gender" />}
-                sx={{
-                  width: "100%",
-                  bgcolor: "#f0f0f0",
-                  minWidth: "auto",
-                  borderBottom: "1px solid #f1f0f0",
-                }}
+                error={touched.gender && Boolean(errors.gender)}
+                helperText={touched.gender ? errors.gender : ""}
                 value={values.gender}
                 onChange={handleChange}
+                InputProps={{ 
+                  style: { background: "#fff",  width: "60%" ,borderRadius:"10px" },
+                  sx: { width: "100%" }
+                }}
               >
                 {genderOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -157,22 +156,22 @@ const App = () => {
                   </MenuItem>
                 ))}
               </TextField>
-              <TextField
+
+              <TextField style= { {marginLeft:"30px"}}
                 name="score"
-                label="Score"
+                label="Score*"
                 fullWidth
                 margin="normal"
-                error={Boolean(<ErrorMessage name="score" />)}
-                helperText={<ErrorMessage name="score" />}
-                sx={{
-                  marginLeft: "20px",
-                  width: "100%",
-                  bgcolor: "#f0f0f0",
-                  borderBottom: "1px solid #f1f0f0",
-                }}
+                error={touched.score && Boolean(errors.score)}
+                helperText={touched.score ? errors.score : ""}
                 value={values.score}
                 onChange={handleChange}
+                InputProps={{ 
+                  style: { background: "#fff",  width: "60%" ,borderRadius:"10px" },
+                  sx: { width: "100%" }
+                }}
               />
+
               <div
                 style={{
                   paddingBottom: "30px",
@@ -192,20 +191,37 @@ const App = () => {
                   }}
                 >
                   <Button
-                    style={{ margin: "0 10px" }}
+                    style={{ margin: "0 10px", width:"100px",boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.1)", }}
+                   
                     type="submit"
                     color="primary"
                     variant="contained"
                     disabled={isSubmitting}
+                    sx={{
+                  
+                      color: "#ffffff", // เปลี่ยนสีตัวอักษร
+                    }}
                   >
                     {editIndex >= 0 ? "Edit" : "Add"}
-                  </Button>
-                  <Button
-                    style={{ margin: "0 10px" }}
+                  </Button >
+                  <Button 
+                    style={{ margin: "0 20px", width:"100px",boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.1)", }}
                     type="button"
                     onClick={() => {
                       resetForm();
                       setEditIndex(-1);
+                    }}
+                    sx={{
+                      
+                      width:"100px",
+                      backgroundColor: "#fff", // เปลี่ยนสีพื้นหลัง
+                      color: "#000", // เปลี่ยนสีตัวอักษร
+                       border: "0.05px solid #d0d0d0",
+                       boxShadow: "2px 2px 2px rgba(0, 0, 0, 0.1)",
+                      "&:hover": {
+                        backgroundColor: "#efefef", // เปลี่ยนสีเมื่อเมาส์โฮเวอร์
+                          
+                      },
                     }}
                   >
                     Cancel
@@ -217,12 +233,57 @@ const App = () => {
               <Table>
                 <TableHead sx={{ backgroundColor: "#8da8d8" }}>
                   <TableRow>
-                    <TableCell sx={{ color: "#ffffff", borderRight: "1px solid #f1f0f0", width: "8%", textAlign: "center" }}>No.</TableCell>
-                    <TableCell sx={{ color: "#ffffff", borderRight: "1px solid #f1f0f0", width: "5%" }}></TableCell>
-                    <TableCell sx={{ color: "#ffffff", borderRight: "1px solid #f1f0f0" }}>First name</TableCell>
-                    <TableCell sx={{ color: "#ffffff", borderRight: "1px solid #f1f0f0" }}>Last name</TableCell>
-                    <TableCell sx={{ color: "#ffffff", borderRight: "1px solid #f1f0f0", textAlign: "center" }}>Gender</TableCell>
-                    <TableCell sx={{ color: "#ffffff", borderRight: "1px solid #f1f0f0", textAlign: "center" }}>Score</TableCell>
+                    <TableCell
+                      sx={{
+                        color: "#ffffff",
+                        borderRight: "1px solid #f1f0f0",
+                        width: "8%",
+                        textAlign: "center",
+                      }}
+                    >
+                      No.
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "#ffffff",
+                        borderRight: "1px solid #f1f0f0",
+                        width: "5%",
+                      }}
+                    ></TableCell>
+                    <TableCell
+                      sx={{
+                        color: "#ffffff",
+                        borderRight: "1px solid #f1f0f0",
+                      }}
+                    >
+                      First name
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "#ffffff",
+                        borderRight: "1px solid #f1f0f0",
+                      }}
+                    >
+                      Last name
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "#ffffff",
+                        borderRight: "1px solid #f1f0f0",
+                        textAlign: "center",
+                      }}
+                    >
+                      Gender
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "#ffffff",
+                        borderRight: "1px solid #f1f0f0",
+                        textAlign: "center",
+                      }}
+                    >
+                      Score
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -230,20 +291,56 @@ const App = () => {
                     <TableRow
                       key={index}
                       sx={{
-                        backgroundColor: index % 2 === 0 ? "#ffffff" : "#f0f4ff",
-                        '&:hover': { backgroundColor: '#ececec' },
-                      }}>
-                      <TableCell style={{ borderBottom: "1px solid #f1f0f0", borderRight: "1px solid #f1f0f0", textAlign: "center" }}>{index + 1}</TableCell>
-                      <TableCell style={{ borderBottom: "1px solid #f1f0f0", borderRight: "1px solid #f1f0f0" }}>
+                        backgroundColor:
+                          index % 2 === 0 ? "#ffffff" : "#e9e9e9",
+                        "&:hover": { backgroundColor: "#ececec" },
+                      }}
+                    >
+                      <TableCell
+                        style={{
+                          borderBottom: "1px solid #f1f0f0",
+                          borderRight: "1px solid #f1f0f0",
+                          textAlign: "center",
+                        }}
+                      >
+                        {index + 1}
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          borderBottom: "1px solid #f1f0f0",
+                          borderRight: "1px solid #f1f0f0",
+                        }}
+                      >
                         <IconButton
                           onClick={() => handleEdit(index, setValues)}
+                          sx={{ color: "Black" }}
                         >
                           <EditIcon />
                         </IconButton>
                       </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid #f1f0f0", borderRight: "1px solid #f1f0f0" }}>{row.firstname}</TableCell>
-                      <TableCell style={{ borderBottom: "1px solid #f1f0f0", borderRight: "1px solid #f1f0f0" }}>{row.lastname}</TableCell>
-                      <TableCell style={{ borderBottom: "1px solid #f1f0f0", borderRight: "1px solid #f1f0f0", textAlign: "center" }}>
+                      <TableCell
+                        style={{
+                          borderBottom: "1px solid #f1f0f0",
+                          borderRight: "1px solid #f1f0f0",
+                        }}
+                      >
+                        {row.firstname}
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          borderBottom: "1px solid #f1f0f0",
+                          borderRight: "1px solid #f1f0f0",
+                        }}
+                      >
+                        {row.lastname}
+                      </TableCell>
+                      <TableCell
+                        style={{
+                          borderBottom: "1px solid #f1f0f0",
+                          borderRight: "1px solid #f1f0f0",
+                          textAlign: "center",
+                        }}
+                      >
                         <Tooltip
                           title={
                             row.gender === "F"
@@ -256,7 +353,15 @@ const App = () => {
                           <span>{row.gender}</span>
                         </Tooltip>
                       </TableCell>
-                      <TableCell style={{ borderBottom: "1px solid #f1f0f0", borderRight: "1px solid #f1f0f0", textAlign: "center" }}>{parseFloat(row.score).toFixed(2)}</TableCell>
+                      <TableCell
+                        style={{
+                          borderBottom: "1px solid #f1f0f0",
+                          borderRight: "1px solid #f1f0f0",
+                          textAlign: "center",
+                        }}
+                      >
+                        {parseFloat(row.score).toFixed(2)}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
